@@ -1,5 +1,71 @@
 <?php
 class Database {
+    // get these configs from Config class -LATER-
+    private $HOST       = '127.0.0.1';
+    private $USER       = 'root';
+    private $PASS       = '';
+    private $DB_NAME    = 'SocialNetwork';
+    //private $DNS        = 'mysql:host=' . $this->HOST . ';dbname=' . $this->DB_NAME; 
     
-}
+    
+    private static $pdo;
+    private $pdoStatement;
+    private $result;
+    private $rowCount;
+    private $error;
+    
+    public function __construct() {
+        try{
+            if(isset($this->pdo)){
+                return $this->pdo;
+            } else {
+                $dsn = 'mysql:host=' . $this->HOST . ';dbname=' . $this->DB_NAME;
+                $this->pdo = new PDO($dsn, $this->USER, $this->PASS, 
+                                    array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+                        );//end of PDO construct
+            }
+        }catch(PDOException $e){
+            // echo the error message
+            echo $e->getMessage();
+            
+        }//end of try catch statement
+    } // end of construct
+    
+    
+    public function prepareQuery($query){
+        try {
+            $this->pdoStatement = $this->pdo->prepare($query);
+        }catch(PDOException $e){
+            echo $e->getMessage();
+        }
+    }
+    
+    public function bind($param ,$value){
+        $this->pdoStatement->bindValue($param, $value);
+    }
+    
+    public function execute(){
+        $this->pdoStatement->execute();
+        $this->result = $this->pdoStatement->rowCount();
+        $this->result = $this->pdoStatement->fetchAll(PDO::FETCH_OBJ);
+        $this->closeCursor();
+        return $this->result;
+    }
+    
+    public function getRowCount(){
+		return $this->rowCount;
+	}
+        
+    public function lastInsertId(){
+	return $this->pdo->lastInsertId();
+    }
+    
+    //close database connection 
+    public function closeConnection(){
+        $this->pdoStatement = null;
+        $this->pdo          = null;
+    }
+    
+  
+} // end of Database class
 
