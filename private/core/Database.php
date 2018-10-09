@@ -20,7 +20,7 @@ class Database {
                 return $this->pdo;
             } else {
                 $dsn = 'mysql:host=' . $this->HOST . ';dbname=' . $this->DB_NAME;
-                $this->pdo = new PDO($dsn, $this->USER, $this->PASS, 
+                self::$pdo = new PDO($dsn, $this->USER, $this->PASS, 
                                     array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
                         );//end of PDO construct
             }
@@ -34,7 +34,7 @@ class Database {
     
     public function prepareQuery($query){
         try {
-            $this->pdoStatement = $this->pdo->prepare($query);
+            $this->pdoStatement = self::$pdo->prepare($query);
         }catch(PDOException $e){
             echo $e->getMessage();
         }
@@ -46,24 +46,24 @@ class Database {
     
     public function execute(){
         $this->pdoStatement->execute();
-        $this->result = $this->pdoStatement->rowCount();
-        $this->result = $this->pdoStatement->fetchAll(PDO::FETCH_OBJ);
-        $this->closeCursor();
+        $this->rowCount     = $this->pdoStatement->rowCount();
+        $this->result       = $this->pdoStatement->fetchAll(PDO::FETCH_OBJ);
+        $this->pdoStatement->closeCursor();
         return $this->result;
     }
     
     public function getRowCount(){
-		return $this->rowCount;
-	}
+	return $this->rowCount;
+    }
         
     public function lastInsertId(){
-	return $this->pdo->lastInsertId();
+	return self::$pdo->lastInsertId();
     }
     
     //close database connection 
     public function closeConnection(){
         $this->pdoStatement = null;
-        $this->pdo          = null;
+        self::$pdo          = null;
     }
     
   
