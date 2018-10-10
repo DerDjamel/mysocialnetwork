@@ -1,10 +1,11 @@
 <?php
 class Database {
     // get these configs from Config class -LATER-
-    private $HOST       = '127.0.0.1';
+    private $HOST       = '127.0.0.1'; // PHP7 Don't accept localhost
     private $USER       = 'root';
     private $PASS       = '';
     private $DB_NAME    = 'SocialNetwork';
+    //this is an error somehow !
     //private $DNS        = 'mysql:host=' . $this->HOST . ';dbname=' . $this->DB_NAME; 
     
     
