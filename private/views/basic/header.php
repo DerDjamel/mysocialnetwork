@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <title>SocialNetwork</title>
-        // css files
+        <link rel="stylesheet" href="../../../private/css/style.css">
     </head>
     
     <body>
