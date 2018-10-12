@@ -23,7 +23,7 @@ class App {
         
         //require the controller
         require_once '../private/controllers/' . $this->controller .'.php';
-        
+        $this->controller = new $this->controller;
         /***
          * SETTING THE METHOD
          ***/
@@ -41,7 +41,7 @@ class App {
         
         // Call the method of the current controller
         call_user_func_array(array($this->controller, $this->method), $this->params);
-        
+
     }
     
     
