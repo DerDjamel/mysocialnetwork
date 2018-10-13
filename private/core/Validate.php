@@ -16,6 +16,11 @@ class Validate {
         return  filter_var($int, FILTER_VALIDATE_INT);
     }
     
+    public static function password($password){
+        return strlen($password) > 0; // zero just for testing
+    }
+
+
     public static function url($url){
         return filter_var($url, FILTER_VALIDATE_URL);
     }

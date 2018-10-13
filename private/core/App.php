@@ -37,7 +37,7 @@ class App {
         /***
          * GETTING THE PARAMATERS IF THERE IS ANY
          ***/
-        $this->params = $url ? array_values($url) : array();
+        //$this->params = $url ? array_values($url) : array();
         
         // Call the method of the current controller
         call_user_func_array(array($this->controller, $this->method), $this->params);
