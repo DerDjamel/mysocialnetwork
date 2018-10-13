@@ -20,7 +20,9 @@ class Login extends Controller {
         //if the user in not logged in, show the login page
         $this->getView('Login/index');
     }
-     
+    
+    
+    
     
     public function logUserIn(){
         if(Request::isPost()){
@@ -28,12 +30,9 @@ class Login extends Controller {
             $validatedEmail = Validate::email($sanatizedEmail);
             
             if(Validate::password($_POST['password'])){
-                $user = $this->userModel::getUser($validatedEmail, $_POST['password']);
-                if($user === FALSE){
-                  //set the user logged in status
-                  
+                if($this->userModel::userExists($validatedEmail, $_POST['password'])){
+                  echo 'user exist';
                 }
-                Session::put('user_id', );
             }
         }
     }
