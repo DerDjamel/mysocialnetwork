@@ -4,7 +4,8 @@ class Login extends Controller {
     public function __construct() {}
 
     public function index(){
-        // get the models here 
+        // get the models here
+        $userModel = $this->getModel('User'); 
         //$userModel = $this->getModel('User');
         // check if user is already logged in
         if(isset($_SESSION['user_id'])){
